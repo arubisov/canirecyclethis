@@ -182,7 +182,8 @@ class MainActivity : AppCompatActivity() {
                 val yesNo = if (isReyclable) "Yes" else "No"
                 textViewRecyclability.setText(yesNo)
 
-
+                val objectLabel = whatObjectIsThis(labels)
+                textViewTagline.setText("Can I recycle this " + objectLabel + "?")
 
                 // Display resulting labels on screen
                 for (label in labels) {
@@ -198,6 +199,10 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
                 throw e
             }
+    }
+
+    private fun whatObjectIsThis (labels: List<FirebaseVisionImageLabel>): String {
+        return labels.first().text
     }
 
     private fun isImageRecyclable (labels: List<FirebaseVisionImageLabel>): Boolean {
