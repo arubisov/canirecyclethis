@@ -14,6 +14,9 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import android.os.Build
+import com.google.firebase.FirebaseApp
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import kotlinx.android.synthetic.main.activity_results.*
 
 
@@ -31,12 +34,21 @@ class MainActivity : AppCompatActivity() {
             requestPermissions(permissions, requestCode)
         }
 
+        FirebaseApp.initializeApp(this)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         anton_test_button.setOnClickListener { v ->
             dispatchTakePictureIntent()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        storageDir.deleteRecursively()
     }
 
     val REQUEST_TAKE_PHOTO = 1
@@ -123,6 +135,37 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun identifyImage() {
+        val image: FirebaseVisionImage
+        try {
+            image = FirebaseVisionImage.fromFilePath(this.applicationContext, Uri.fromFile(File(currentPhotoPath)))
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        val labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler()
+
+        // Or, to set the minimum confidence required:
+        // val options = FirebaseVisionOnDeviceImageLabelerOptions.Builder()
+        //     .setConfidenceThreshold(0.7f)
+        //     .build()
+        // val labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler(options)
+
+        labeler.processImage(image)
+            .addOnSuccessListener { labels ->
+                // Task completed successfully
+                for (label in labels) {
+                    val text = label.text
+                    val entityId = label.entityId
+                    val confidence = label.confidence
+                }
+            }
+            .addOnFailureListener { e ->
+                // Task failed with an exception
+                // ...
+            }
     }
 
 }
