@@ -21,6 +21,8 @@ import android.view.View
 import com.google.firebase.FirebaseApp
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import android.util.Log
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel
 
 
 class MainActivity : AppCompatActivity() {
@@ -171,6 +173,14 @@ class MainActivity : AppCompatActivity() {
         labeler.processImage(image)
             .addOnSuccessListener { labels ->
                 // Task completed successfully
+
+                val isReyclable = isImageRecyclable(labels)
+                val yesNo = if (isReyclable) "Yes" else "No"
+                textViewRecyclability.setText(yesNo)
+
+
+
+                // Display resulting labels on screen
                 for (label in labels) {
                     val text = label.text
                     // val entityId = label.entityId
@@ -186,4 +196,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    private fun isImageRecyclable (labels: List<FirebaseVisionImageLabel>): Boolean {
+        return labels[0].text == "food"
+    }
 }
