@@ -9,8 +9,77 @@
 
     <ImageView
             android:layout_width="212dp"
-            android:layout_height="208dp" app:srcCompat="@drawable/bovine" tools:layout_editor_absoluteY="93dp"
-            android:id="@+id/imageView" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_height="208dp" app:srcCompat="@drawable/bovine"
+            android:id="@+id/imageViewSubject" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintHorizontal_bias="0.497"/>
+            app:layout_constraintHorizontal_bias="0.497" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+            android:text="Can I recycle this?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewTagline"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewSubject" tools:layout_editor_absoluteX="149dp"/>
+    <Button
+            android:text="Recycling in Palo Alto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonAccessLocalRecyclingInfo" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTagline" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+            android:text="YES / NO."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="176dp" android:id="@+id/textViewRecyclability"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textViewTagline"/>
+    <TableLayout
+            android:layout_width="50dp"
+            android:layout_height="76dp" tools:layout_editor_absoluteY="75dp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewSubject" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintHorizontal_bias="0.809"
+            android:id="@+id/tablePossibleMatches">
+
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <TextView
+                    android:text="Match 1"
+                    android:layout_width="22dp"
+                    android:layout_height="42dp"
+                    tools:layout_editor_absoluteX="176dp" android:id="@+id/textViewMatch1"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textViewTagline"
+                    android:textSize="8sp"/>
+            <TextView
+                    android:text="0.95"
+                    android:layout_width="22dp"
+                    android:layout_height="40dp" android:id="@+id/textViewProb1" android:textSize="8sp"/>
+
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <TextView
+                    android:text="Match 2"
+                    android:layout_width="26dp"
+                    android:layout_height="42dp"
+                    tools:layout_editor_absoluteX="176dp" android:id="@+id/textViewMatch2"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textViewTagline"/>
+            <TextView
+                    android:text="0.82"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textViewProb2"/>
+
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <TextView
+                    android:text="Match 3"
+                    android:layout_width="26dp"
+                    android:layout_height="42dp"
+                    tools:layout_editor_absoluteX="176dp" android:id="@+id/textViewMatch3"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textViewTagline"/>
+            <TextView
+                    android:text="0.62"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textViewProb4"/>
+
+        </TableRow>
+    </TableLayout>
 </android.support.constraint.ConstraintLayout>
