@@ -21,6 +21,30 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
+     * Save the photo to an external dir.
+     * The photos will remain private to our app only, so don't need permissions for WRITE_EXTERNAL_STORAGE in the
+     * manifest (if above SDK 18, which we are).
+     *
+     * Here we create a collision-resistant file name, and save the path to a member variable.
+     */
+    var currentPhotoPath: String = ""
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
+    }
+
+    /**
      *  invoke an intent to capture a photo.
      *
      *  the startActivityForResult() method is protected by a condition that calls resolveActivity(),
@@ -41,44 +65,20 @@ class MainActivity : AppCompatActivity() {
                     createImageFile()
                 } catch (ex: IOException) {
                     // Error occurred while creating the File
-                    ...
+                    ex.printStackTrace()
                     null
                 }
                 // Continue only if the File was successfully created
                 photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
                         this,
-                        "com.example.android.fileprovider",
+                        "com.example.tnaworks.canirecyclethis.fileprovider",
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
                 }
             }
-        }
-    }
-
-    /**
-     * Save the photo to an external dir.
-     * The photos will remain private to our app only, so don't need permissions for WRITE_EXTERNAL_STORAGE in the
-     * manifest (if above SDK 18, which we are).
-     *
-     * Here we create a collision-resistant file name, and save the path to a member variable.
-     */
-    var currentPhotoPath: String
-
-    @Throws(IOException::class)
-    private fun createImageFile(): File {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            currentPhotoPath = absolutePath
         }
     }
 
