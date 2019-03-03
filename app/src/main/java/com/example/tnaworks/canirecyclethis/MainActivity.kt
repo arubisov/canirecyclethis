@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         buttonAccessLocalRecyclingInfo.setOnClickListener(fun(_: View) {
-            val i = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.averagepeopleokaystyle.com"))
+            val i = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.greenwasteofpaloalto.com/sites/greenwasteofpaloalto.com/files/2017%20Detailed%20Material%20Guide.pdf"))
             startActivity(i)
         })
 
@@ -176,6 +176,7 @@ class MainActivity : AppCompatActivity() {
 
         labeler.processImage(image)
             .addOnSuccessListener { labels ->
+                if(labels.count() > 0) {
                 // Task completed successfully
 
                 val isReyclable = isImageRecyclable(labels)
@@ -185,6 +186,8 @@ class MainActivity : AppCompatActivity() {
                 val objectLabel = whatObjectIsThis(labels)
                 textViewTagline.setText("Can I recycle this " + objectLabel + "?")
 
+                textViewAdvice.setText(recyclingAdvice(labels))
+
                 // Display resulting labels on screen
                 for (label in labels) {
                     val text = label.text
@@ -192,6 +195,10 @@ class MainActivity : AppCompatActivity() {
                     val confidence = Math.round(label.confidence * 100.0) / 100.0
                     textViewLabels.text = "${textViewLabels.text}$text: $confidence\n"
                 }
+                } else {
+                    textViewTagline.setText("I have no idea what the fuck that is.")
+                }
+
             }
             .addOnFailureListener { e ->
                 // Task failed with an exception
@@ -206,16 +213,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isImageRecyclable (labels: List<FirebaseVisionImageLabel>): Boolean {
-        val word = "cardboard"
-        val matcher = "(?i)(?<!\\p{L})$word(?!\\p{L})".toRegex()
+        val matcher = "(?i)(?<!\\p{L})(bottle|jar|can|cardboard|paper)(?!\\p{L})".toRegex()
 
         val isRecyclable: (FirebaseVisionImageLabel) -> Boolean = {
-            it.text.contains("bottle", ignoreCase = true ) or
-            it.text.contains("jar", ignoreCase = true ) or
-            it.text.contains("can", ignoreCase = true ) or
-            it.text.contains(matcher)
+            it.text.matches(matcher)
         }
 
         return labels.any(isRecyclable)
+    }
+
+    private fun recyclingAdvice (labels: List<FirebaseVisionImageLabel>): String {
+        val isCardboard: (FirebaseVisionImageLabel) -> Boolean = {
+            it.text.matches("(?i)(?<!\\p{L})cardboard(?!\\p{L})".toRegex())
+        }
+
+        return if (labels.any(isCardboard)) "Don't forget to break down your cardboard!" else ""
     }
 }

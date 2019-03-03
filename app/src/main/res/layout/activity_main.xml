@@ -49,4 +49,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0" android:textSize="10sp" android:fontFamily="monospace"
     />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewAdvice" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRecyclability" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAccessLocalRecyclingInfo"
+            app:layout_constraintVertical_bias="0.262" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:text="Test"/>
 </android.support.constraint.ConstraintLayout>
