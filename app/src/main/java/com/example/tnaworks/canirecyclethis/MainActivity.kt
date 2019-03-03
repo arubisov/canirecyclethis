@@ -206,7 +206,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isImageRecyclable (labels: List<FirebaseVisionImageLabel>): Boolean {
-        val isRecyclable: (FirebaseVisionImageLabel) -> Boolean = { it.text.contains("bottle", ignoreCase = true ) }
+        val word = "cardboard"
+        val matcher = "(?i)(?<!\\p{L})$word(?!\\p{L})".toRegex()
+
+        val isRecyclable: (FirebaseVisionImageLabel) -> Boolean = {
+            it.text.contains("bottle", ignoreCase = true ) or
+            it.text.contains("jar", ignoreCase = true ) or
+            it.text.contains("can", ignoreCase = true ) or
+            it.text.contains(matcher)
+        }
 
         return labels.any(isRecyclable)
     }
