@@ -47,7 +47,21 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Results::class.java)
             intent.putExtra("currentPhotoPath", currentPhotoPath)
             startActivity(intent)
+
+            // Here's when Anton sends his data of too be processed by Google
+
+            // Here's where the results comes back from Google and tells us what object / probabilities ar
+            var datalist = arrayOf(
+                Pair("Tetrapak container", 0.96),
+                Pair ("Battery", 0.80),
+                Pair("Hair dryer", 0.2)
+            )
+            intent.putExtra("objectMatches", datalist)
+
+
         }
+
+
     }
 
 
@@ -104,6 +118,8 @@ class MainActivity : AppCompatActivity() {
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+
+
                 }
             }
         }
