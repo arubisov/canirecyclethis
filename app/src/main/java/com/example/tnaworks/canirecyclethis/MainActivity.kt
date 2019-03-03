@@ -19,7 +19,6 @@ import com.google.firebase.FirebaseApp
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         val permissions = arrayOf(
             "android.permission.ACCESS_FINE_LOCATION",
             "android.permission.CAMERA"
@@ -32,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseApp.initializeApp(this)
 
+        // Must call before super.onCreate
+        setTheme(R.style.AppTheme)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -41,9 +43,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         storageDir.deleteRecursively()
+        super.onDestroy()
     }
 
     val REQUEST_TAKE_PHOTO = 1

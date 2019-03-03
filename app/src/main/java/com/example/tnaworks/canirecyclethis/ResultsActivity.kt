@@ -24,6 +24,7 @@ class ResultsActivity : AppCompatActivity() {
     private var currentPhotoPath: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
 
