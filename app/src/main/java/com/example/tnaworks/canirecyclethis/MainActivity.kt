@@ -21,10 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val permissions = arrayOf(
-            "android.permission.WRITE_EXTERNAL_STORAGE",
             "android.permission.ACCESS_FINE_LOCATION",
-            "android.permission.READ_PHONE_STATE",
-            "android.permission.SYSTEM_ALERT_WINDOW",
             "android.permission.CAMERA"
         )
 
