@@ -7,16 +7,38 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import android.os.Build
+
+
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val permissions = arrayOf(
+            "android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.ACCESS_FINE_LOCATION",
+            "android.permission.READ_PHONE_STATE",
+            "android.permission.SYSTEM_ALERT_WINDOW",
+            "android.permission.CAMERA"
+        )
+
+        val requestCode = 200
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, requestCode)
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        anton_test_button.setOnClickListener { v ->
+            dispatchTakePictureIntent()
+        }
     }
 
 
@@ -81,5 +103,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 }
