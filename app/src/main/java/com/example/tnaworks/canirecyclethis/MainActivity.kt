@@ -35,14 +35,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        anton_test_button.setOnClickListener { v ->
+        anton_test_button.setOnClickListener {
             dispatchTakePictureIntent()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         storageDir.deleteRecursively()
     }
 
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            val intent = Intent(this, Results::class.java)
+            val intent = Intent(this, ResultsActivity::class.java)
             intent.putExtra("currentPhotoPath", currentPhotoPath)
             startActivity(intent)
         }
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     private fun createImageFile(): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
@@ -111,8 +111,6 @@ class MainActivity : AppCompatActivity() {
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
-
-
                 }
             }
         }
