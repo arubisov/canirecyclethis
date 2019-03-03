@@ -1,7 +1,6 @@
 package com.example.tnaworks.canirecyclethis
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -15,9 +14,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.os.Build
 import com.google.firebase.FirebaseApp
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import kotlinx.android.synthetic.main.activity_results.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +42,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         storageDir.deleteRecursively()
     }
@@ -59,21 +54,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Results::class.java)
             intent.putExtra("currentPhotoPath", currentPhotoPath)
             startActivity(intent)
-
-            // Here's when Anton sends his data of too be processed by Google
-
-            // Here's where the results comes back from Google and tells us what object / probabilities ar
-            var datalist = arrayOf(
-                Pair("Tetrapak container", 0.96),
-                Pair ("Battery", 0.80),
-                Pair("Hair dryer", 0.2)
-            )
-            intent.putExtra("objectMatches", datalist)
-
-
         }
-
-
     }
 
 
@@ -135,37 +116,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun identifyImage() {
-        val image: FirebaseVisionImage
-        try {
-            image = FirebaseVisionImage.fromFilePath(this.applicationContext, Uri.fromFile(File(currentPhotoPath)))
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        val labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler()
-
-        // Or, to set the minimum confidence required:
-        // val options = FirebaseVisionOnDeviceImageLabelerOptions.Builder()
-        //     .setConfidenceThreshold(0.7f)
-        //     .build()
-        // val labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler(options)
-
-        labeler.processImage(image)
-            .addOnSuccessListener { labels ->
-                // Task completed successfully
-                for (label in labels) {
-                    val text = label.text
-                    val entityId = label.entityId
-                    val confidence = label.confidence
-                }
-            }
-            .addOnFailureListener { e ->
-                // Task failed with an exception
-                // ...
-            }
     }
 
 }
