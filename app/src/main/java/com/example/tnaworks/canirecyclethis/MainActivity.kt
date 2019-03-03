@@ -22,6 +22,8 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import android.util.Log
+import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions
+import com.google.firebase.ml.vision.label.FirebaseVisionCloudImageLabelerOptions
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel
 
 
@@ -162,13 +164,15 @@ class MainActivity : AppCompatActivity() {
             throw e
         }
 
-        val labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler()
-
         // Or, to set the minimum confidence required:
+        // val labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler()
         // val options = FirebaseVisionOnDeviceImageLabelerOptions.Builder()
         //     .setConfidenceThreshold(0.7f)
         //     .build()
         // val labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler(options)
+
+        val labeler = FirebaseVision.getInstance().getCloudImageLabeler()
+
 
         labeler.processImage(image)
             .addOnSuccessListener { labels ->
