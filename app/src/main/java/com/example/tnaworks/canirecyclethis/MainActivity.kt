@@ -1,6 +1,7 @@
 package com.example.tnaworks.canirecyclethis
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +14,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import android.os.Build
-
+import kotlinx.android.synthetic.main.activity_results.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,6 +39,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    val REQUEST_TAKE_PHOTO = 1
+    var currentPhotoPath: String = ""
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            val intent = Intent(this, Results::class.java)
+            intent.putExtra("currentPhotoPath", currentPhotoPath)
+            startActivity(intent)
+        }
+    }
+
 
     /**
      * Save the photo to an external dir.
@@ -46,8 +58,6 @@ class MainActivity : AppCompatActivity() {
      *
      * Here we create a collision-resistant file name, and save the path to a member variable.
      */
-    var currentPhotoPath: String = ""
-
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
@@ -73,8 +83,6 @@ class MainActivity : AppCompatActivity() {
      *
      *  https://developer.android.com/training/camera/photobasics.html
      */
-    val REQUEST_TAKE_PHOTO = 1
-
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -100,7 +108,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
 }
