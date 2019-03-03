@@ -201,6 +201,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isImageRecyclable (labels: List<FirebaseVisionImageLabel>): Boolean {
-        return labels[0].text == "food"
+        val isRecyclable: (FirebaseVisionImageLabel) -> Boolean = { it.text.contains("bottle", ignoreCase = true ) }
+
+        return labels.any(isRecyclable)
     }
 }
