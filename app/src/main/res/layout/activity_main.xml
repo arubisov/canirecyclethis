@@ -7,22 +7,46 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+    <ImageView
+            android:layout_width="212dp"
+            android:layout_height="208dp" app:srcCompat="@drawable/bovine"
+            android:id="@+id/imageViewSubject" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.497" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"/>
     <TextView
+            android:text="Can I recycle this?"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:id="@+id/shittyText"/>
+            android:layout_height="18dp"
+            android:id="@+id/textViewTagline"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewSubject"
+            android:layout_marginTop="28dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
     <Button
-            android:text="Take a bitchin photo"
+            android:text="Recycling in Palo Alto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/anton_test_button" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/shittyText" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/buttonAccessLocalRecyclingInfo" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTagline" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintVertical_bias="0.167"/>
-
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+            android:text="YES / NO."
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/textViewRecyclability"
+            android:layout_marginTop="44dp" app:layout_constraintTop_toBottomOf="@+id/textViewTagline"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAccessLocalRecyclingInfo"
+            app:layout_constraintHorizontal_bias="0.498" app:layout_constraintVertical_bias="0.023"/>
+    <TextView
+            android:text=""
+            android:layout_width="98dp"
+            android:layout_height="205dp"
+            android:id="@+id/textViewLabels" app:layout_constraintStart_toEndOf="@+id/imageViewSubject"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0" android:textSize="10sp" android:fontFamily="monospace"
+    />
 </android.support.constraint.ConstraintLayout>
