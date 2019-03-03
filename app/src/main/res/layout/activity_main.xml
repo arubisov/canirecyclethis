@@ -7,6 +7,8 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+    <include layout="@layout/tips_overlay"/>
+
     <ImageView
             android:layout_width="212dp"
             android:layout_height="208dp" app:srcCompat="@drawable/bovine"

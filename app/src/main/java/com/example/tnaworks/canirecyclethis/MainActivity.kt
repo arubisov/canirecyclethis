@@ -156,6 +156,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun identifyImage(bitmap: Bitmap) {
+
+        val progressOverlay: View = findViewById(R.id.tips_overlay)
+
+        // Show progress overlay (with animation):
+        AndroidUtils.animateView(progressOverlay, View.VISIBLE, 0.4F, 200L)
+
         var image: FirebaseVisionImage
         try {
             image = FirebaseVisionImage.fromBitmap(bitmap)
@@ -206,6 +212,11 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
                 throw e
             }
+
+        // Hide it (with animation):
+        AndroidUtils.animateView(progressOverlay, View.GONE, 0F, 200L)
+
+
     }
 
     private fun whatObjectIsThis (labels: List<FirebaseVisionImageLabel>): String {
