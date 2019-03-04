@@ -53,6 +53,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(i)
         })
 
+        textViewAdvice.setText("")
+
         dispatchTakePictureIntent()
     }
 
@@ -233,11 +235,17 @@ class MainActivity : AppCompatActivity() {
         return labels.any(isRecyclable)
     }
 
+
     private fun recyclingAdvice (labels: List<FirebaseVisionImageLabel>): String {
-        val isCardboard: (FirebaseVisionImageLabel) -> Boolean = {
-            it.text.matches("(?i)(?<!\\p{L})cardboard(?!\\p{L})".toRegex())
+        val advice = arrayOf(
+            Pair(Regex("(?i)(?<!\\p{L})cardboard(?!\\p{L})"),"Don't forget to break down your cardboard!"),
+            Pair(Regex("(?i)(?<!\\p{L})light bulb(?!\\p{L})"),"Careful: You can throw out incandescent and halogen bulbs, but LED bulbs are hazardous household waste!")
+        )
+
+        val match = advice.firstOrNull { pair ->
+            labels.any{ it.text.matches(pair.first)}
         }
 
-        return if (labels.any(isCardboard)) "Don't forget to break down your cardboard!" else ""
+        return match?.second ?: ""
     }
 }
