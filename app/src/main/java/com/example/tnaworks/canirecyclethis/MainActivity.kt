@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun identifyImage(bitmap: Bitmap) {
 
-        val progressOverlay: View = findViewById(R.id.tips_overlay)
+        val progressOverlay = R.layout.tips_overlay as View
 
         // Show progress overlay (with animation):
         AndroidUtils.animateView(progressOverlay, View.VISIBLE, 0.4F, 200L)
