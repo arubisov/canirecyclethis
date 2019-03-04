@@ -159,12 +159,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun identifyImage(bitmap: Bitmap) {
-
-        val progressOverlay = R.layout.tips_overlay as View
-
-        // Show progress overlay (with animation):
-        AndroidUtils.animateView(progressOverlay, View.VISIBLE, 0.4F, 200L)
-
         var image: FirebaseVisionImage
         try {
             image = FirebaseVisionImage.fromBitmap(bitmap)
@@ -181,7 +175,6 @@ class MainActivity : AppCompatActivity() {
         // val labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler(options)
 
         val labeler = FirebaseVision.getInstance().getCloudImageLabeler()
-
 
         labeler.processImage(image)
             .addOnSuccessListener { labels ->
@@ -215,11 +208,6 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
                 throw e
             }
-
-        // Hide it (with animation):
-        AndroidUtils.animateView(progressOverlay, View.GONE, 0F, 200L)
-
-
     }
 
     private fun whatObjectIsThis (labels: List<FirebaseVisionImageLabel>): String {
