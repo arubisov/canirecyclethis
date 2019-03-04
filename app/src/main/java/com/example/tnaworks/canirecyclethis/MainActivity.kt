@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         textViewAdvice.setText("")
+        textViewRecyclability.setText("")
 
         dispatchTakePictureIntent()
     }
